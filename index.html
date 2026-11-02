@@ -252,7 +252,69 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
 </script>
 </script>
 </script>
+</script>
+  <!-- Secret Admin View Panel -->
+<div id="adminViewModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; justify-content: center; align-items: center; font-family: sans-serif;">
+  <div style="background: #1e1e2f; color: #fff; padding: 25px; border-radius: 15px; max-width: 450px; width: 90%; border: 2px solid #ff4b2b; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <h3 style="margin-top:0; color:#ff4b2b; text-align:center;">👑 Karima's Saved Wishes</h3>
+    <p style="font-size: 13px; color: #aaa; text-align:center;">Karima ki ki likheche ekhane shob dekhte pabe:</p>
+    
+    <div id="wishesDisplayBox" style="background: #111; padding: 15px; border-radius: 8px; max-height: 250px; overflow-y: auto; color: #00ffcc; font-size: 14px; margin-bottom: 15px; border: 1px solid #333; white-space: pre-wrap;">
+      Ekhono kono wish load hoyni...
+    </div>
+    
+    <div style="display: flex; gap: 10px;">
+      <button onclick="loadSavedWishes()" style="background: #ff4b2b; color: white; border: none; padding: 10px; font-weight: bold; border-radius: 6px; cursor: pointer; flex: 1;">🔄 Refresh</button>
+      <button onclick="closeAdminView()" style="background: #444; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; flex: 1;">Close</button>
+    </div>
+  </div>
+</div>
 
+<!-- Secret Trigger Dot at bottom-left -->
+<span onclick="openAdminView()" style="position: fixed; bottom: 2px; left: 2px; color: rgba(255,255,255,0.05); font-size: 10px; cursor: pointer; z-index: 9999;" title="View">.</span>
+
+<script>
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v') {
+      openAdminView();
+    }
+  });
+
+  function openAdminView() {
+    document.getElementById('adminViewModal').style.display = 'flex';
+    loadSavedWishes();
+  }
+
+  function closeAdminView() {
+    document.getElementById('adminViewModal').style.display = 'none';
+  }
+
+  function loadSavedWishes() {
+    try {
+      const savedWishes = localStorage.getItem('karima-wishes');
+      const displayBox = document.getElementById('wishesDisplayBox');
+      
+      if (savedWishes) {
+        const parsed = JSON.parse(savedWishes);
+        if(parsed.length > 0) {
+          displayBox.innerHTML = parsed.map((w, index) => `${index + 1}. ${w}`).join("\n\n");
+        } else {
+          displayBox.innerHTML = "Box faka, ekhono kichu lekha hoyni!";
+        }
+      } else {
+        const listItems = document.querySelectorAll('#list li, .wish-item');
+        if(listItems.length > 0) {
+          let tempArr = [];
+          listItems.forEach(item => tempArr.push(item.innerText));
+          displayBox.innerHTML = tempArr.join("\n\n");
+        } else {
+          displayBox.innerHTML = "Kono data pawa jayni!";
+        }
+      }
+    } catch (err) {
+      document.getElementById('wishesDisplayBox').innerHTML = "Error loading wishes!";
+    }
+  }
 </script>
 </body>
 </html>
