@@ -192,7 +192,7 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
   wishes.unshift(t);try{localStorage.setItem(KEY,JSON.stringify(wishes))}catch(e){}
   $("#w").value="";draw();confetti(90);burst(W*.3,H*.4,80);burst(W*.7,H*.4,80);chime([659,784,988,1319])};
 </script>
-<!-- কর্নার বড় চারকোনা ফটো স্লাইডার ও অ্যানিমেশন -->
+<!-- কর্নার ফটো স্লাইডার ও অ্যানিমেশন -->
 <div class="corner-slider">
   <img src="karima1.jpg" class="slide-img active" alt="Karima">
   <img src="karima2.jpg" class="slide-img" alt="Karima">
@@ -204,12 +204,12 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
   position: fixed;
   bottom: 25px;
   right: 25px;
-  width: 220px; /* চারকোনা বড় চওড়া */
-  height: 280px; /* চারকোনা বড় উচ্চতা */
-  border-radius: 15px; /* হালকা গোল চারকোনা কোণা */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
   overflow: hidden;
-  border: 4px solid #ff4b2b;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border: 3px solid #ff4b2b;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   z-index: 9999;
   background: #fff;
   animation: floatCorner 3s ease-in-out infinite;
@@ -232,7 +232,7 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
 
 @keyframes floatCorner {
   0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
   100% { transform: translateY(0px) rotate(0deg); }
 }
 </style>
@@ -248,7 +248,8 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
     slides[currentSlide].classList.add('active');
   }
   
-  setInterval(nextSlide, 3000); // প্রতি ৩ সেকেন্ড পর পর ছবি বদলাবে
+  setInterval(nextSlide, 3000);
+</script>
 </script>
 </script>
 </script>
