@@ -192,7 +192,7 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
   wishes.unshift(t);try{localStorage.setItem(KEY,JSON.stringify(wishes))}catch(e){}
   $("#w").value="";draw();confetti(90);burst(W*.3,H*.4,80);burst(W*.7,H*.4,80);chime([659,784,988,1319])};
 </script>
-  <!-- কর্নার ফটো স্লাইডার ও অ্যানিমেশন -->
+<!-- kornar foto slaidar o animason -->
 <div class="corner-slider">
   <img src="karima1.jpg" class="slide-img active" alt="Karima">
   <img src="karima2.jpg" class="slide-img" alt="Karima">
@@ -204,12 +204,12 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
   position: fixed;
   bottom: 25px;
   right: 25px;
-  width: 100px;
-  height: 100px;
+  width: 160px; /* ekhane boro kora holo */
+  height: 160px; /* ekhane boro kora holo */
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid #ff4b2b;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  border: 4px solid #ff4b2b;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
   z-index: 9999;
   background: #fff;
   animation: floatCorner 3s ease-in-out infinite;
@@ -249,6 +249,7 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
   }
   
   setInterval(nextSlide, 3000);
+</script>
 </script>
 </body>
 </html>
