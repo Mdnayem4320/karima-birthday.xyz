@@ -319,5 +319,21 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
     }
   }
 </script>
+  <!-- Background Music -->
+<audio id="bg-music" loop>
+  <source src="lavan.mp3" type="audio/mpeg">
+  তোমার ব্রাউজার অডিও ট্যাগ সমর্থন করে না।
+</audio>
+
+<script>
+  window.addEventListener('click', function() {
+    var music = document.getElementById('bg-music');
+    if (music.paused) {
+      music.play().catch(function(error) {
+        console.log("Audio play blocked:", error);
+      });
+    }
+  }, { once: true });
+</script>
 </body>
 </html>
