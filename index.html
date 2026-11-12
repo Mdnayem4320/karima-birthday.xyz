@@ -321,7 +321,6 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
       document.getElementById('wishesDisplayBox').innerHTML = "Error loading wishes!";
     }
   }
-</script>
 <!-- Non-overlapping Continuous Background Audio Playlist -->
 <audio id="bg-music"></audio>
 
@@ -332,30 +331,27 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
 
   function playCurrentAudio() {
     if (currentAudioIndex >= audioFiles.length) {
-      currentAudioIndex = 0; // প্লেলিস্ট শেষ হলে আবার প্রথম থেকে শুরু হবে
+      currentAudioIndex = 0; 
     }
     music.src = audioFiles[currentAudioIndex];
-    music.load(); // নতুন সোর্স লোড নিশ্চিত করবে
-    music.play().then(() => {
-      // সফলভাবে বাজানো শুরু হলো
-    }).catch(error => {
+    music.load();
+    music.play().catch(error => {
       console.log("Audio play blocked or error:", error);
     });
   }
 
-  // ওয়েবসাইটে প্রথম ক্লিক করলে প্লেলিস্ট চালু হবে
-  window.addEventListener('click', function() {
-    if (music.paused && currentAudioIndex === 0 && music.src === "") {
+  // ওয়েবসাইটে যেকোনো জায়গায় প্রথম ক্লিক করলেই সাথে সাথে গান চালু হবে
+  document.addEventListener('click', function() {
+    if (music.paused) {
       playCurrentAudio();
     }
   }, { once: true });
 
-  // আগের গান পুরোপুরি শেষ (ended) হওয়ার পরেই কেবল পরের গান শুরু হবে, একসাথে বাজবে না
+  // একটা গান পুরোপুরি শেষ হওয়ার পরেই কেবল পরের গান শুরু হবে, একসাথে বাজবে না
   music.addEventListener('ended', function() {
     currentAudioIndex++;
     playCurrentAudio();
   });
-</script>
 </script>
 </body>
 </html>
