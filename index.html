@@ -322,44 +322,37 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
     }
   }
 </script>
-</body>
-  <!-- Auto-Play Trigger on First Interaction -->
+  <!-- Continuous Background Audio Playlist -->
 <audio id="bg-music"></audio>
 
 <script>
-  const audioFiles = ["very.mp3", "joss.mp3"];
+  const audioFiles = ["joss.mp3"];
   let currentAudioIndex = 0;
   const music = document.getElementById('bg-music');
 
-  function playPlaylist() {
+  function playNextAudio() {
     if (currentAudioIndex >= audioFiles.length) {
-      currentAudioIndex = 0;
+      currentAudioIndex = 0; // লিস্ট শেষ হলে আবার প্রথম থেকে শুরু হবে (লুপ হবে)
     }
     music.src = audioFiles[currentAudioIndex];
-    music.load();
     music.play().then(() => {
-      console.log("Playing:", audioFiles[currentAudioIndex]);
-    }).catch(err => {
-      console.log("Autoplay waiting for interaction:", err);
+      currentAudioIndex++;
+    }).catch(error => {
+      console.log("Audio play blocked or error:", error);
     });
   }
 
-  function triggerAudio() {
-    if (music.paused) {
-      playPlaylist();
+  // ওয়েবসাইটে যেকোনো জায়গায় প্রথম ক্লিক করলেই বাজানো শুরু হবে
+  window.addEventListener('click', function() {
+    if (music.paused && currentAudioIndex === 0) {
+      playNextAudio();
     }
-    window.removeEventListener('click', triggerAudio);
-    window.removeEventListener('touchstart', triggerAudio);
-    window.removeEventListener('keydown', triggerAudio);
-  }
+  }, { once: true });
 
-  window.addEventListener('click', triggerAudio);
-  window.addEventListener('touchstart', triggerAudio);
-  window.addEventListener('keydown', triggerAudio);
-
+  // একটা শেষ হলেই সাথে সাথে পরেরটা শুরু হবে এবং সারাক্ষণ বাজতে থাকবে
   music.addEventListener('ended', function() {
-    currentAudioIndex++;
-    playPlaylist();
+    playNextAudio();
   });
+</body>
 </script>
 </html>
