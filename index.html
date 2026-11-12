@@ -321,7 +321,9 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
       document.getElementById('wishesDisplayBox').innerHTML = "Error loading wishes!";
     }
   }
-<!-- Non-overlapping Continuous Background Audio Playlist -->
+</script>
+</body>
+  <!-- Auto-Play Trigger on First Interaction -->
 <audio id="bg-music"></audio>
 
 <script>
@@ -329,29 +331,35 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
   let currentAudioIndex = 0;
   const music = document.getElementById('bg-music');
 
-  function playCurrentAudio() {
+  function playPlaylist() {
     if (currentAudioIndex >= audioFiles.length) {
-      currentAudioIndex = 0; 
+      currentAudioIndex = 0;
     }
     music.src = audioFiles[currentAudioIndex];
     music.load();
-    music.play().catch(error => {
-      console.log("Audio play blocked or error:", error);
+    music.play().then(() => {
+      console.log("Playing:", audioFiles[currentAudioIndex]);
+    }).catch(err => {
+      console.log("Autoplay waiting for interaction:", err);
     });
   }
 
-  // ওয়েবসাইটে যেকোনো জায়গায় প্রথম ক্লিক করলেই সাথে সাথে গান চালু হবে
-  document.addEventListener('click', function() {
+  function triggerAudio() {
     if (music.paused) {
-      playCurrentAudio();
+      playPlaylist();
     }
-  }, { once: true });
+    window.removeEventListener('click', triggerAudio);
+    window.removeEventListener('touchstart', triggerAudio);
+    window.removeEventListener('keydown', triggerAudio);
+  }
 
-  // একটা গান পুরোপুরি শেষ হওয়ার পরেই কেবল পরের গান শুরু হবে, একসাথে বাজবে না
+  window.addEventListener('click', triggerAudio);
+  window.addEventListener('touchstart', triggerAudio);
+  window.addEventListener('keydown', triggerAudio);
+
   music.addEventListener('ended', function() {
     currentAudioIndex++;
-    playCurrentAudio();
+    playPlaylist();
   });
 </script>
-</body>
 </html>
