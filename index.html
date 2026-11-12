@@ -322,18 +322,18 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
     }
   }
 </script>
-</body>
-<audio id="bg-music" src="joss.mp3" loop></audio>
+<audio id="bg-music" src="joss.mp3" preload="auto" loop></audio>
 
 <script>
-  const music = document.getElementById('bg-music');
+  const mySong = document.getElementById('bg-music');
 
   window.addEventListener('click', function() {
-    if (music.paused) {
-      music.play().catch(error => {
-        console.log("Error:", error);
+    if (mySong.paused) {
+      mySong.play().catch(function(error) {
+        console.log("Play failed:", error);
       });
     }
   }, { once: true });
-</script>
+</script>  
+</body>
 </html>
