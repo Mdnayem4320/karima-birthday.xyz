@@ -322,37 +322,18 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
     }
   }
 </script>
-  <!-- Continuous Background Audio Playlist -->
-<audio id="bg-music"></audio>
+</body>
+<audio id="bg-music" src="joss.mp3" loop></audio>
 
 <script>
-  const audioFiles = ["joss.mp3"];
-  let currentAudioIndex = 0;
   const music = document.getElementById('bg-music');
 
-  function playNextAudio() {
-    if (currentAudioIndex >= audioFiles.length) {
-      currentAudioIndex = 0; // লিস্ট শেষ হলে আবার প্রথম থেকে শুরু হবে (লুপ হবে)
-    }
-    music.src = audioFiles[currentAudioIndex];
-    music.play().then(() => {
-      currentAudioIndex++;
-    }).catch(error => {
-      console.log("Audio play blocked or error:", error);
-    });
-  }
-
-  // ওয়েবসাইটে যেকোনো জায়গায় প্রথম ক্লিক করলেই বাজানো শুরু হবে
   window.addEventListener('click', function() {
-    if (music.paused && currentAudioIndex === 0) {
-      playNextAudio();
+    if (music.paused) {
+      music.play().catch(error => {
+        console.log("Error:", error);
+      });
     }
   }, { once: true });
-
-  // একটা শেষ হলেই সাথে সাথে পরেরটা শুরু হবে এবং সারাক্ষণ বাজতে থাকবে
-  music.addEventListener('ended', function() {
-    playNextAudio();
-  });
-</body>
 </script>
 </html>
