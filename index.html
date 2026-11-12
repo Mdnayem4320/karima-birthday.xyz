@@ -322,18 +322,38 @@ $("#save").onclick=()=>{const t=$("#w").value.trim();if(!t)return $("#w").focus(
     }
   }
 </script>
-<audio id="bg-music" src="joss.mp3" preload="auto" loop></audio>
+</script>
+    
+    <audio id="bg-music" preload="auto"></audio>
+    <script>
+      const playlist = ["very.mp3", "joss.mp3"];
+      let songIndex = 0;
+      const audio = document.getElementById('bg-music');
 
-<script>
-  const mySong = document.getElementById('bg-music');
+      function playNextSong() {
+        if (songIndex >= playlist.length) {
+          songIndex = 0;
+        }
+        audio.src = playlist[songIndex];
+        audio.load();
+        audio.play().catch(error => {
+          console.log("Waiting for user interaction");
+        });
+      }
 
-  window.addEventListener('click', function() {
-    if (mySong.paused) {
-      mySong.play().catch(function(error) {
-        console.log("Play failed:", error);
+      window.addEventListener('click', function() {
+        if (audio.paused) {
+          playNextSong();
+        }
+      }, { once: true });
+
+      audio.addEventListener('ended', function() {
+        songIndex++;
+        playNextSong();
       });
-    }
-  }, { once: true });
-</script>  
+    </script>
+
+  </body>
+</html>
 </body>
 </html>
